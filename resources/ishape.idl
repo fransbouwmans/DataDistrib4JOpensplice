@@ -1,0 +1,10 @@
+module def {
+struct ShapeType {
+  long x;
+  long y;
+  long shapesize;
+  string color;
+};
+
+#pragma keylist ShapeType color
+};

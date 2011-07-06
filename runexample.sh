@@ -1,0 +1,1 @@
+java -Dorg.omg.dds.serviceClassName=org.opensplice.dds.psm.BootStrapOpensplice -cp lib/example.jar:lib/datadistrib4jopensplice.jar:../datadistrib4j/omgdds/lib/omgdds.jar:${OSPL_HOME}/jar/dcpssaj.jar:${OSPL_HOME}/jar/dcpscj.jar org.opensplice.dds.psm.example.IshapesApp

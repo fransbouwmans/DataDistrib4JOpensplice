@@ -1,0 +1,17 @@
+Implementation for Opensplice of the proposed OMG DDS Java
+Application Programming Interface (API)
+This is an interim solution until a native implementation is provided by
+Prismtech. This implementation is not complete. It will also not provide
+any performance improvements over the original DCPS API since DCPS is
+used as the underlying mechanism. Also since this implementation wraps 
+around the native DCPS interface, it requires generated DCPS code for
+all topics used in an application.
+
+This software is provided without any warranty for its correct functioning, or
+completeness. It should not be used in production code.
+
+Due to my limited knowledge of the java language I was not able to create
+compilable java code for a very specific feature of the EntityQos.
+As a result I have modified the original file to remove this feature and
+have included that file in this distribution. The original license (Apache) is
+applicable to this single file.
