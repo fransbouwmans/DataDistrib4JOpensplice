@@ -24,6 +24,7 @@ import org.omg.dds.type.builtin.KeyedBytesDataWriter;
 import org.omg.dds.type.builtin.KeyedString;
 import org.omg.dds.type.builtin.KeyedStringDataWriter;
 import org.omg.dds.type.builtin.StringDataWriter;
+import org.opensplice.dds.psm.qos.OpenspliceDataWriterQos;
 import org.opensplice.dds.psm.qos.OpensplicePublisherQos;
 
 import DDS.LivelinessLostStatus;
@@ -34,6 +35,7 @@ import DDS.PublisherQosHolder;
 
 public class OpensplicePublisher implements Publisher {
 
+    final private Bootstrap bootstrap;
     private DDS.Publisher publisher;
     private OpenspliceDomainParticipant participant;
     private PublisherListener listener = null;
@@ -77,8 +79,10 @@ public class OpensplicePublisher implements Publisher {
 
     }
 
-    public OpensplicePublisher(DDS.Publisher thepublisher,
+    public OpensplicePublisher(Bootstrap thebootstrap,
+            DDS.Publisher thepublisher,
             OpenspliceDomainParticipant theparticipant) {
+        bootstrap = thebootstrap;
         publisher = thepublisher;
         participant = theparticipant;
     }
@@ -174,16 +178,19 @@ public class OpensplicePublisher implements Publisher {
 
     @Override
     public <TYPE> DataWriter<TYPE> createDataWriter(Topic<TYPE> topic) {
-        // TODO Auto-generated method stub
-        return null;
+        DataWriter<TYPE> writer = new OpenspliceDataWriter<TYPE>(bootstrap,
+                topic, this, null);
+        return writer;
     }
 
     @Override
     public <TYPE> DataWriter<TYPE> createDataWriter(Topic<TYPE> topic,
             DataWriterQos qos, DataWriterListener<TYPE> listener,
             Collection<Class<? extends Status<?, ?>>> statuses) {
-        // TODO Auto-generated method stub
-        return null;
+        DataWriter<TYPE> writer = new OpenspliceDataWriter<TYPE>(bootstrap,
+                topic, this, qos);
+        writer.setListener(listener);
+        return writer;
     }
 
     @Override
@@ -376,7 +383,9 @@ public class OpensplicePublisher implements Publisher {
     @Override
     public DataWriterQos getDefaultDataWriterQos() {
         // TODO Auto-generated method stub
-        return null;
+        DDS.DataWriterQosHolder holder = new DDS.DataWriterQosHolder();
+        publisher.get_default_datawriter_qos(holder);
+        return new OpenspliceDataWriterQos(holder.value, bootstrap);
     }
 
     @Override

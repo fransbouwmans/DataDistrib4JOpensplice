@@ -59,7 +59,20 @@ public class OpenspliceSample<TYPE> implements Sample<TYPE> {
         } else {
             viewState = ViewState.NOT_NEW;
         }
-        instanceState = InstanceState.values()[sampleInfo.instance_state];
+        switch (sampleInfo.instance_state) {
+        case DDS.ALIVE_INSTANCE_STATE.value:
+            instanceState = InstanceState.ALIVE;
+            break;
+        case DDS.NOT_ALIVE_INSTANCE_STATE.value:
+            instanceState = InstanceState.NOT_ALIVE_DISPOSED;
+            break;
+        case DDS.NOT_ALIVE_NO_WRITERS_INSTANCE_STATE.value:
+            instanceState = InstanceState.NOT_ALIVE_NO_WRITERS;
+            break;
+        default:
+            instanceState = InstanceState.ALIVE;
+
+        }
         time = new OpenspliceTime(sampleInfo.source_timestamp);
         disposedGenerationCount = sampleInfo.disposed_generation_count;
         noWritersGenerationCount = sampleInfo.no_writers_generation_count;

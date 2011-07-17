@@ -9,12 +9,12 @@ import org.omg.dds.core.policy.LatencyBudgetQosPolicy;
 import org.omg.dds.core.policy.modifiable.ModifiableLatencyBudgetQosPolicy;
 import org.opensplice.dds.psm.OpenspliceDuration;
 
-public class OpenspliceLatencyQosPolicy implements
+public class OpenspliceLatencyBudgetQosPolicy implements
         ModifiableLatencyBudgetQosPolicy {
 
     private DDS.LatencyBudgetQosPolicy policy;
 
-    public OpenspliceLatencyQosPolicy(DDS.LatencyBudgetQosPolicy thepolicy) {
+    public OpenspliceLatencyBudgetQosPolicy(DDS.LatencyBudgetQosPolicy thepolicy) {
         policy = thepolicy;
     }
 
@@ -40,7 +40,7 @@ public class OpenspliceLatencyQosPolicy implements
     @Override
     public ModifiableLatencyBudgetQosPolicy copyFrom(
             LatencyBudgetQosPolicy other) {
-        policy = ((OpenspliceLatencyQosPolicy) other).getPolicy();
+        policy = ((OpenspliceLatencyBudgetQosPolicy) other).getPolicy();
         return this;
     }
 
@@ -69,7 +69,7 @@ public class OpenspliceLatencyQosPolicy implements
         return new OpenspliceDuration(policy.duration);
     }
 
-    public OpenspliceLatencyQosPolicy clone() {
-        return new OpenspliceLatencyQosPolicy(policy);
+    public OpenspliceLatencyBudgetQosPolicy clone() {
+        return new OpenspliceLatencyBudgetQosPolicy(policy);
     }
 }

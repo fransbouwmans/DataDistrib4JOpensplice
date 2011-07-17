@@ -43,6 +43,7 @@ public class OpenspliceDomainParticipant
             DDS.DomainParticipant participant) {
         bootstrap = thebootstrap;
         openspliceParticipant = participant;
+        openspliceParticipant.enable();
     }
 
     public DDS.DomainParticipant getOpenspliceParticipant() {
@@ -96,7 +97,7 @@ public class OpenspliceDomainParticipant
 
     @Override
     public void close() {
-        throw new RuntimeException("Not implemented");
+        openspliceParticipant.delete_contained_entities();
     }
 
     @Override
@@ -115,7 +116,7 @@ public class OpenspliceDomainParticipant
         openspliceParticipant.get_default_publisher_qos(holder);
         DDS.Publisher publisher = openspliceParticipant.create_publisher(
                 holder.value, null, 0);
-        return new OpensplicePublisher(publisher, this);
+        return new OpensplicePublisher(bootstrap, publisher, this);
     }
 
     @Override

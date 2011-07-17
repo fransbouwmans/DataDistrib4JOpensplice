@@ -37,7 +37,7 @@ import org.omg.dds.topic.TopicQos;
 import org.omg.dds.topic.modifiable.ModifiableTopicQos;
 import org.opensplice.dds.psm.qos.policy.OpenspliceDeadlineQosPolicy;
 import org.opensplice.dds.psm.qos.policy.OpenspliceDurabilityQosPolicy;
-import org.opensplice.dds.psm.qos.policy.OpenspliceLatencyQosPolicy;
+import org.opensplice.dds.psm.qos.policy.OpenspliceLatencyBudgetQosPolicy;
 import org.opensplice.dds.psm.qos.policy.OpenspliceReliabilityQosPolicy;
 import org.opensplice.dds.psm.qos.policy.OpenspliceTopicDataQosPolicy;
 
@@ -145,14 +145,14 @@ public class OpenspliceTopicQos implements ModifiableTopicQos {
     @Override
     public ModifiableTopicQos setLatencyBudget(
             LatencyBudgetQosPolicy latencyBudget) {
-        qos.latency_budget = ((OpenspliceLatencyQosPolicy) latencyBudget)
+        qos.latency_budget = ((OpenspliceLatencyBudgetQosPolicy) latencyBudget)
                 .getPolicy();
         return this;
     }
 
     @Override
     public ModifiableLatencyBudgetQosPolicy getLatencyBudget() {
-        return new OpenspliceLatencyQosPolicy(qos.latency_budget);
+        return new OpenspliceLatencyBudgetQosPolicy(qos.latency_budget);
     }
 
     @Override

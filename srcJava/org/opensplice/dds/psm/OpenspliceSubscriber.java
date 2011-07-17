@@ -23,6 +23,7 @@ import org.omg.dds.type.builtin.KeyedBytesDataReader;
 import org.omg.dds.type.builtin.KeyedString;
 import org.omg.dds.type.builtin.KeyedStringDataReader;
 import org.omg.dds.type.builtin.StringDataReader;
+import org.opensplice.dds.psm.qos.OpenspliceDataReaderQos;
 
 public class OpenspliceSubscriber implements org.omg.dds.sub.Subscriber {
 
@@ -317,13 +318,13 @@ public class OpenspliceSubscriber implements org.omg.dds.sub.Subscriber {
     @Override
     public void endAccess() {
         // TODO Auto-generated method stub
-
     }
 
     @Override
     public DataReaderQos getDefaultDataReaderQos() {
-        // TODO Auto-generated method stub
-        return null;
+        DDS.DataReaderQosHolder holder = new DDS.DataReaderQosHolder();
+        subscriber.get_default_datareader_qos(holder);
+        return new OpenspliceDataReaderQos(holder.value, bootstrap);
     }
 
     @Override
